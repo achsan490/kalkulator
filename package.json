@@ -1,0 +1,23 @@
+{
+  "name": "kalkulator-paywall",
+  "version": "1.0.0",
+  "description": "Kalkulator unik dengan fitur paywall bayar per perhitungan",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "calculator",
+    "paywall",
+    "qris",
+    "express",
+    "javascript"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "cors": "^2.8.5"
+  }
+}

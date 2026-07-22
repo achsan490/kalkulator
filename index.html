@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PayCalc v1.0 Windows 95 Desktop Edition - Kalkulator Unik dengan Fitur Paywall">
+  <title>PayCalc v1.0 - Windows 95 Edition</title>
+  
+  <!-- Google Fonts: VT323 (Pixel Font), MS Reference Monospace style -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- CSS Style -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="win95-body">
+
+  <!-- WINDOWS 95 DESKTOP CONTAINER -->
+  <div class="win95-desktop">
+    
+    <!-- Desktop Icons -->
+    <div class="desktop-icons">
+      <div class="desktop-icon">
+        <i class="fa-solid fa-desktop icon-img"></i>
+        <span>My Computer</span>
+      </div>
+      <div class="desktop-icon">
+        <i class="fa-solid fa-trash-can icon-img"></i>
+        <span>Recycle Bin</span>
+      </div>
+      <div class="desktop-icon active">
+        <i class="fa-solid fa-calculator icon-img calc-icon"></i>
+        <span>PayCalc.exe</span>
+      </div>
+      <div class="desktop-icon">
+        <i class="fa-solid fa-globe icon-img"></i>
+        <span>Internet</span>
+      </div>
+    </div>
+
+    <!-- MAIN WINDOW: PayCalc.exe -->
+    <div class="win95-window" id="calcWindow">
+      
+      <!-- Window Titlebar -->
+      <div class="win95-titlebar">
+        <div class="titlebar-text">
+          <i class="fa-solid fa-calculator"></i> PayCalc - Premium Calculator v1.0
+        </div>
+        <div class="titlebar-controls">
+          <button type="button" class="titlebar-btn" title="Minimize">_</button>
+          <button type="button" class="titlebar-btn" title="Maximize">□</button>
+          <button type="button" class="titlebar-btn btn-close" title="Close">×</button>
+        </div>
+      </div>
+
+      <!-- Menu Bar -->
+      <div class="win95-menubar">
+        <span class="menu-item"><u>F</u>ile</span>
+        <span class="menu-item"><u>E</u>dit</span>
+        <span class="menu-item"><u>V</u>iew</span>
+        <span class="menu-item"><u>H</u>elp</span>
+      </div>
+
+      <!-- Window Content Body -->
+      <div class="win95-window-body">
+        
+        <!-- CRT / Sunken Display Screen -->
+        <div class="win95-display-box win95-sunken">
+          <div class="display-status-bar">
+            <span class="status-tag" id="lockStatus"><i class="fa-solid fa-shield"></i> READY</span>
+            <span class="cost-tag">RATE: RP 1.000</span>
+          </div>
+
+          <!-- History / Expression -->
+          <div class="win95-expression" id="displayExpression">0</div>
+
+          <!-- Main Input / Answer Display -->
+          <div class="win95-main-display" id="displayMain">0</div>
+
+          <!-- Paywall Banner Overlay -->
+          <div class="win95-paywall-banner hidden" id="paywallBanner">
+            <i class="fa-solid fa-triangle-exclamation"></i> PAYWALL ACTIVE! PRESS <strong>=</strong> TO UNLOCK
+          </div>
+        </div>
+
+        <!-- Calculator Keypad Buttons Grid -->
+        <div class="win95-keypad">
+          <!-- Row 1 -->
+          <button type="button" class="win95-btn btn-action" id="btnClear" data-action="clear">C</button>
+          <button type="button" class="win95-btn btn-action" id="btnBackspace" data-action="backspace">
+            <i class="fa-solid fa-backspace"></i>
+          </button>
+          <button type="button" class="win95-btn btn-op" data-op="%">%</button>
+          <button type="button" class="win95-btn btn-op" data-op="/">÷</button>
+
+          <!-- Row 2 -->
+          <button type="button" class="win95-btn btn-num" data-num="7">7</button>
+          <button type="button" class="win95-btn btn-num" data-num="8">8</button>
+          <button type="button" class="win95-btn btn-num" data-num="9">9</button>
+          <button type="button" class="win95-btn btn-op" data-op="*">×</button>
+
+          <!-- Row 3 -->
+          <button type="button" class="win95-btn btn-num" data-num="4">4</button>
+          <button type="button" class="win95-btn btn-num" data-num="5">5</button>
+          <button type="button" class="win95-btn btn-num" data-num="6">6</button>
+          <button type="button" class="win95-btn btn-op" data-op="-">-</button>
+
+          <!-- Row 4 -->
+          <button type="button" class="win95-btn btn-num" data-num="1">1</button>
+          <button type="button" class="win95-btn btn-num" data-num="2">2</button>
+          <button type="button" class="win95-btn btn-num" data-num="3">3</button>
+          <button type="button" class="win95-btn btn-op" data-op="+">+</button>
+
+          <!-- Row 5 -->
+          <button type="button" class="win95-btn btn-num btn-zero" data-num="0">0</button>
+          <button type="button" class="win95-btn btn-num" data-num=".">.</button>
+          <button type="button" class="win95-btn btn-equals" id="btnEquals" data-action="equals">
+            <span>=</span>
+            <span class="btn-price-tag">RP 1.000</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Window Status Bar at Bottom -->
+      <div class="win95-statusbar">
+        <div class="statusbar-field field-left">Press = for Payment Prompt</div>
+        <div class="statusbar-field field-right">PAYWALL ENFORCED</div>
+      </div>
+
+    </div>
+
+    <!-- WINDOWS 95 TASKBAR AT BOTTOM -->
+    <div class="win95-taskbar">
+      <!-- Start Button -->
+      <button type="button" class="taskbar-start-btn" id="startBtn">
+        <i class="fa-brands fa-windows start-logo"></i>
+        <span>Start</span>
+      </button>
+
+      <!-- Active Window Tasks -->
+      <div class="taskbar-tasks">
+        <div class="task-item active">
+          <i class="fa-solid fa-calculator"></i>
+          <span>PayCalc.exe</span>
+        </div>
+      </div>
+
+      <!-- System Tray (Clock & SFX Toggle) -->
+      <div class="win95-systray win95-sunken">
+        <button type="button" class="sfx-toggle-btn" id="btnSoundToggle" title="Toggle Retro Sound Effects">
+          <i class="fa-solid fa-volume-high" id="soundIcon"></i>
+          <span id="soundText">SFX</span>
+        </button>
+        <span class="clock-display" id="win95Clock">12:00 PM</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- POP-UP MODAL: WINDOWS 95 SYSTEM ERROR / PAYMENT PROMPT -->
+  <div class="modal-overlay hidden" id="paywallModal" aria-hidden="true" role="dialog">
+    <div class="win95-dialog-box">
+      
+      <!-- Dialog Titlebar -->
+      <div class="win95-titlebar dialog-titlebar">
+        <div class="titlebar-text">
+          <i class="fa-solid fa-triangle-exclamation"></i> Security Alert - Payment Required
+        </div>
+        <button type="button" class="titlebar-btn btn-close" id="modalCloseBtn">&times;</button>
+      </div>
+
+      <!-- Dialog Content Body -->
+      <div class="win95-dialog-body">
+        
+        <div class="dialog-prompt-header">
+          <!-- Win95 Yellow Alert Icon -->
+          <div class="win95-alert-icon">!</div>
+          <div class="dialog-prompt-text">
+            <h3>Matematika Itu Mahal!</h3>
+            <p>Bayar <strong>Rp1.000</strong> untuk membuka hasil jawaban matematika ini.</p>
+          </div>
+        </div>
+
+        <!-- Order Detail Sunken Box -->
+        <div class="win95-receipt-box win95-sunken">
+          <div class="receipt-line">
+            <span>EKSPRESI:</span>
+            <span class="receipt-val" id="modalExpression">15 + 25</span>
+          </div>
+          <div class="receipt-line">
+            <span>BIAYA JASA OTAK:</span>
+            <span>Rp 1.000</span>
+          </div>
+          <div class="receipt-hr"></div>
+          <div class="receipt-line total-line">
+            <span>TOTAL DIBAYAR:</span>
+            <span class="green-price">RP 1.000</span>
+          </div>
+        </div>
+
+        <!-- Dot Matrix QRIS Print Mockup -->
+        <div class="qris-win95-container">
+          <div class="qris-win95-card win95-sunken">
+            <div class="qris-win95-header">
+              <span class="qris-bold">QRIS</span>
+              <span class="qris-sub">STANDAR BAYAR DIGI 1995</span>
+            </div>
+            
+            <div class="qr-code-win95">
+              <svg class="qr-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <rect x="0" y="0" width="200" height="200" fill="#ffffff" rx="4"/>
+                
+                <!-- Position Detection Patterns -->
+                <rect x="15" y="15" width="45" height="45" fill="#000000"/>
+                <rect x="23" y="23" width="29" height="29" fill="#ffffff"/>
+                <rect x="29" y="29" width="17" height="17" fill="#000080"/>
+                
+                <rect x="140" y="15" width="45" height="45" fill="#000000"/>
+                <rect x="148" y="23" width="29" height="29" fill="#ffffff"/>
+                <rect x="154" y="29" width="17" height="17" fill="#000080"/>
+                
+                <rect x="15" y="140" width="45" height="45" fill="#000000"/>
+                <rect x="23" y="148" width="29" height="29" fill="#ffffff"/>
+                <rect x="29" y="154" width="17" height="17" fill="#000080"/>
+
+                <!-- Matrix Blocks -->
+                <g fill="#000000">
+                  <rect x="70" y="15" width="10" height="10"/>
+                  <rect x="90" y="15" width="10" height="10"/>
+                  <rect x="115" y="15" width="15" height="10"/>
+                  <rect x="70" y="30" width="20" height="10"/>
+                  <rect x="100" y="30" width="10" height="10"/>
+                  <rect x="120" y="30" width="10" height="10"/>
+
+                  <rect x="15" y="70" width="10" height="20"/>
+                  <rect x="35" y="70" width="20" height="10"/>
+                  <rect x="70" y="60" width="10" height="30"/>
+                  <rect x="90" y="70" width="20" height="20"/>
+                  <rect x="120" y="60" width="15" height="10"/>
+                  <rect x="140" y="70" width="20" height="10"/>
+                  <rect x="170" y="70" width="15" height="20"/>
+
+                  <rect x="15" y="100" width="25" height="10"/>
+                  <rect x="50" y="100" width="10" height="20"/>
+                  <rect x="70" y="100" width="15" height="10"/>
+                  <rect x="100" y="100" width="30" height="10"/>
+                  <rect x="140" y="95" width="10" height="25"/>
+                  <rect x="160" y="100" width="25" height="10"/>
+
+                  <rect x="70" y="120" width="20" height="10"/>
+                  <rect x="100" y="120" width="10" height="20"/>
+                  <rect x="120" y="115" width="15" height="15"/>
+                  <rect x="150" y="120" width="20" height="10"/>
+
+                  <rect x="70" y="140" width="10" height="20"/>
+                  <rect x="90" y="150" width="20" height="10"/>
+                  <rect x="120" y="140" width="25" height="10"/>
+                  <rect x="155" y="145" width="15" height="25"/>
+                  <rect x="70" y="170" width="30" height="10"/>
+                  <rect x="110" y="165" width="20" height="15"/>
+                  <rect x="140" y="175" width="25" height="10"/>
+                </g>
+
+                <!-- Center Badge -->
+                <rect x="75" y="75" width="50" height="50" fill="#000080" rx="4"/>
+                <text x="100" y="105" font-family="'VT323', monospace" font-size="14" font-weight="900" fill="#ffffff" text-anchor="middle">QRIS</text>
+              </svg>
+            </div>
+            
+            <div class="qris-merchant-win95">PAYCALC CORP (ID: 0x95)</div>
+          </div>
+        </div>
+
+        <!-- Processing Status Box Overlay -->
+        <div class="win95-status-overlay hidden" id="paymentStatusBox">
+          <div class="win95-progress-box" id="paymentSpinner">
+            <p>Processing payment transaction...</p>
+            <!-- Win95 Progress Bar -->
+            <div class="win95-progress-bar win95-sunken">
+              <div class="progress-fill"></div>
+            </div>
+          </div>
+          
+          <div class="win95-success-box hidden" id="paymentSuccessBox">
+            <i class="fa-solid fa-circle-check win95-success-icon"></i>
+            <h3>PAYMENT SUCCESSFUL!</h3>
+            <p>Jawaban telah dibuka di layar kalkulator.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Dialog Action Buttons -->
+      <div class="win95-dialog-footer" id="modalFooter">
+        <button type="button" class="win95-btn btn-dialog btn-ok" id="btnSimulatePay">
+          <u>O</u>K - Simulasi Bayar Rp1.000
+        </button>
+        <button type="button" class="win95-btn btn-dialog" id="btnCancelPay">
+          Cancel
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>

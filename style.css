@@ -1,0 +1,698 @@
+/* ==========================================================================
+   PAYCALC V1.0 - WINDOWS 95 RETRO DESKTOP DESIGN SYSTEM
+   ========================================================================== */
+
+:root {
+  /* Windows 95 Color Palette */
+  --win95-teal: #008080;
+  --win95-grey: #c0c0c0;
+  --win95-grey-light: #dfdfdf;
+  --win95-shadow-dark: #808080;
+  --win95-shadow-black: #000000;
+  --win95-highlight-white: #ffffff;
+  
+  --win95-blue-dark: #000080;
+  --win95-blue-light: #1084d0;
+  
+  --lcd-bg: #000000;
+  --lcd-text: #00ff41;
+  --lcd-dim: #00771e;
+  
+  --font-pixel: 'VT323', monospace;
+  --font-mono: 'Share Tech Mono', monospace;
+  --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Reset & Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font-sans);
+  -webkit-tap-highlight-color: transparent;
+}
+
+body.win95-body {
+  background-color: var(--win95-teal);
+  color: #000000;
+  min-height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  position: relative;
+}
+
+/* WINDOWS 95 DESKTOP ENVIRONMENT */
+.win95-desktop {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px 16px 44px 16px;
+}
+
+/* Desktop Icons Grid */
+.desktop-icons {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 90px;
+}
+
+.desktop-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  padding: 6px;
+  border: 1px solid transparent;
+  user-select: none;
+}
+
+.desktop-icon .icon-img {
+  font-size: 2.2rem;
+  color: #ffffff;
+  text-shadow: 2px 2px 0 #000;
+}
+
+.desktop-icon .calc-icon {
+  color: #ffe600;
+}
+
+.desktop-icon span {
+  font-size: 0.75rem;
+  color: #ffffff;
+  text-align: center;
+  text-shadow: 1px 1px 0 #000;
+  padding: 2px 4px;
+}
+
+.desktop-icon.active span {
+  background: var(--win95-blue-dark);
+  border: 1px dotted #fff;
+}
+
+/* 3D BEVEL UTILITIES */
+.win95-bevel-outset {
+  border-top: 2px solid var(--win95-highlight-white);
+  border-left: 2px solid var(--win95-highlight-white);
+  border-right: 2px solid var(--win95-shadow-black);
+  border-bottom: 2px solid var(--win95-shadow-black);
+  box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 #808080;
+}
+
+.win95-sunken {
+  border-top: 2px solid var(--win95-shadow-dark);
+  border-left: 2px solid var(--win95-shadow-dark);
+  border-right: 2px solid var(--win95-highlight-white);
+  border-bottom: 2px solid var(--win95-highlight-white);
+  background: #ffffff;
+}
+
+/* MAIN WINDOW: PayCalc.exe */
+.win95-window {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 420px;
+  background: var(--win95-grey);
+  border-top: 2px solid var(--win95-highlight-white);
+  border-left: 2px solid var(--win95-highlight-white);
+  border-right: 2px solid var(--win95-shadow-black);
+  border-bottom: 2px solid var(--win95-shadow-black);
+  box-shadow: 
+    inset 1px 1px 0 #dfdfdf, 
+    inset -1px -1px 0 #808080,
+    6px 6px 15px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+}
+
+/* Titlebar */
+.win95-titlebar {
+  background: linear-gradient(90deg, var(--win95-blue-dark), var(--win95-blue-light));
+  color: #ffffff;
+  padding: 4px 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  user-select: none;
+}
+
+.titlebar-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 0.5px;
+}
+
+.titlebar-controls {
+  display: flex;
+  gap: 3px;
+}
+
+.titlebar-btn {
+  background: var(--win95-grey);
+  border-top: 1px solid var(--win95-highlight-white);
+  border-left: 1px solid var(--win95-highlight-white);
+  border-right: 1px solid var(--win95-shadow-black);
+  border-bottom: 1px solid var(--win95-shadow-black);
+  width: 18px;
+  height: 18px;
+  font-size: 0.75rem;
+  font-weight: 900;
+  color: #000;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.titlebar-btn:active {
+  border-top: 1px solid var(--win95-shadow-black);
+  border-left: 1px solid var(--win95-shadow-black);
+  border-right: 1px solid var(--win95-highlight-white);
+  border-bottom: 1px solid var(--win95-highlight-white);
+}
+
+/* Menu Bar */
+.win95-menubar {
+  background: var(--win95-grey);
+  padding: 3px 8px;
+  border-bottom: 1px solid var(--win95-shadow-dark);
+  display: flex;
+  gap: 16px;
+  font-size: 0.8rem;
+  color: #000;
+}
+
+.menu-item {
+  cursor: pointer;
+}
+
+.menu-item:hover {
+  background: var(--win95-blue-dark);
+  color: #fff;
+}
+
+/* Window Content Body */
+.win95-window-body {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Display Box (Green LCD Screen Style) */
+.win95-display-box {
+  background: var(--lcd-bg);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  min-height: 110px;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.display-status-bar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-pixel);
+  font-size: 1.1rem;
+  color: var(--lcd-dim);
+}
+
+.status-tag { color: var(--lcd-text); }
+.cost-tag { color: #ffe600; }
+
+.win95-expression {
+  font-family: var(--font-pixel);
+  font-size: 1.5rem;
+  color: var(--lcd-dim);
+  min-height: 1.6rem;
+  word-break: break-all;
+  text-align: right;
+}
+
+.win95-main-display {
+  font-family: var(--font-pixel);
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--lcd-text);
+  word-break: break-all;
+  text-align: right;
+  line-height: 1;
+  text-shadow: 0 0 8px rgba(0, 255, 65, 0.6);
+}
+
+.win95-paywall-banner {
+  width: 100%;
+  background: #ff0055;
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  text-align: center;
+  margin-top: 4px;
+  font-weight: 700;
+}
+
+/* Keypad Buttons */
+.win95-keypad {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.win95-btn {
+  background: var(--win95-grey);
+  border-top: 2px solid var(--win95-highlight-white);
+  border-left: 2px solid var(--win95-highlight-white);
+  border-right: 2px solid var(--win95-shadow-black);
+  border-bottom: 2px solid var(--win95-shadow-black);
+  height: 48px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #000000;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.win95-btn:active {
+  border-top: 2px solid var(--win95-shadow-black);
+  border-left: 2px solid var(--win95-shadow-black);
+  border-right: 2px solid var(--win95-highlight-white);
+  border-bottom: 2px solid var(--win95-highlight-white);
+  padding-top: 2px;
+  padding-left: 2px;
+}
+
+.btn-num {
+  font-weight: 800;
+}
+
+.btn-op {
+  color: var(--win95-blue-dark);
+}
+
+.btn-action {
+  color: #b91c1c;
+}
+
+/* Equals CTA Button */
+.win95-btn.btn-equals {
+  grid-column: span 2;
+  background: var(--win95-grey-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  color: #000;
+}
+
+.btn-equals span:first-child {
+  font-size: 1.6rem;
+  font-weight: 900;
+}
+
+.btn-price-tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  background: var(--win95-blue-dark);
+  color: #fff;
+  padding: 2px 8px;
+  font-weight: 700;
+}
+
+/* Window Status Bar */
+.win95-statusbar {
+  border-top: 1px solid var(--win95-shadow-dark);
+  padding: 4px 8px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: #333;
+  background: var(--win95-grey);
+}
+
+.statusbar-field {
+  border-top: 1px solid var(--win95-shadow-dark);
+  border-left: 1px solid var(--win95-shadow-dark);
+  border-right: 1px solid var(--win95-highlight-white);
+  border-bottom: 1px solid var(--win95-highlight-white);
+  padding: 2px 6px;
+}
+
+/* WINDOWS 95 TASKBAR AT BOTTOM */
+.win95-taskbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 38px;
+  background: var(--win95-grey);
+  border-top: 2px solid var(--win95-highlight-white);
+  display: flex;
+  align-items: center;
+  padding: 2px 4px;
+  gap: 6px;
+  z-index: 1000;
+}
+
+.taskbar-start-btn {
+  height: 30px;
+  padding: 0 10px;
+  background: var(--win95-grey);
+  border-top: 2px solid var(--win95-highlight-white);
+  border-left: 2px solid var(--win95-highlight-white);
+  border-right: 2px solid var(--win95-shadow-black);
+  border-bottom: 2px solid var(--win95-shadow-black);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 800;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.taskbar-start-btn:active {
+  border-top: 2px solid var(--win95-shadow-black);
+  border-left: 2px solid var(--win95-shadow-black);
+  border-right: 2px solid var(--win95-highlight-white);
+  border-bottom: 2px solid var(--win95-highlight-white);
+}
+
+.start-logo {
+  color: #008080;
+}
+
+.taskbar-tasks {
+  flex: 1;
+  display: flex;
+  gap: 4px;
+}
+
+.task-item {
+  height: 28px;
+  padding: 0 10px;
+  background: var(--win95-grey);
+  border-top: 2px solid var(--win95-shadow-black);
+  border-left: 2px solid var(--win95-shadow-black);
+  border-right: 2px solid var(--win95-highlight-white);
+  border-bottom: 2px solid var(--win95-highlight-white);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  max-width: 160px;
+}
+
+.win95-systray {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 8px;
+  height: 28px;
+}
+
+.sfx-toggle-btn {
+  background: transparent;
+  border: none;
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #000;
+}
+
+.clock-display {
+  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   POP-UP MODAL: WINDOWS 95 SYSTEM ERROR PROMPT
+   ========================================================================== */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.win95-dialog-box {
+  width: 100%;
+  max-width: 410px;
+  background: var(--win95-grey);
+  border-top: 2px solid var(--win95-highlight-white);
+  border-left: 2px solid var(--win95-highlight-white);
+  border-right: 2px solid var(--win95-shadow-black);
+  border-bottom: 2px solid var(--win95-shadow-black);
+  box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+}
+
+.dialog-titlebar {
+  background: linear-gradient(90deg, var(--win95-blue-dark), var(--win95-blue-light));
+}
+
+.win95-dialog-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.dialog-prompt-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.win95-alert-icon {
+  width: 36px;
+  height: 36px;
+  background: #ffe600;
+  border: 2px solid #000;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.dialog-prompt-text h3 {
+  font-size: 1.05rem;
+  color: #000;
+  margin-bottom: 4px;
+}
+
+.dialog-prompt-text p {
+  font-size: 0.85rem;
+  color: #333;
+}
+
+/* Order Detail Sunken Box */
+.win95-receipt-box {
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+}
+
+.receipt-line {
+  display: flex;
+  justify-content: space-between;
+  color: #333;
+}
+
+.receipt-val {
+  font-family: monospace;
+  font-weight: 700;
+  color: var(--win95-blue-dark);
+}
+
+.receipt-hr {
+  border-top: 1px dashed #808080;
+  margin: 2px 0;
+}
+
+.total-line {
+  font-weight: 900;
+  color: #000;
+}
+
+.green-price {
+  color: #059669;
+  font-size: 1rem;
+}
+
+/* QRIS Win95 Container */
+.qris-win95-container {
+  display: flex;
+  justify-content: center;
+}
+
+.qris-win95-card {
+  background: #ffffff;
+  padding: 12px;
+  width: 100%;
+  max-width: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.qris-win95-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.1;
+}
+
+.qris-bold {
+  font-family: var(--font-pixel);
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--win95-blue-dark);
+}
+
+.qris-sub {
+  font-size: 0.55rem;
+  color: #666;
+}
+
+.qr-code-win95 {
+  width: 150px;
+  height: 150px;
+}
+
+.qr-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.qris-merchant-win95 {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: #333;
+}
+
+/* Progress Status Box Overlay */
+.win95-status-overlay {
+  background: var(--win95-grey);
+  border: 2px solid var(--win95-shadow-dark);
+  padding: 16px;
+  text-align: center;
+}
+
+.win95-progress-box p {
+  font-size: 0.85rem;
+  margin-bottom: 8px;
+}
+
+.win95-progress-bar {
+  height: 20px;
+  padding: 2px;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 100%;
+  background: var(--win95-blue-dark);
+  animation: progressFill 1s ease-in-out infinite alternate;
+}
+
+@keyframes progressFill {
+  0% { width: 10%; }
+  100% { width: 100%; }
+}
+
+.win95-success-icon {
+  font-size: 2.8rem;
+  color: #059669;
+  margin-bottom: 6px;
+}
+
+.win95-success-box h3 {
+  font-size: 1.1rem;
+  color: #059669;
+}
+
+.win95-success-box p {
+  font-size: 0.8rem;
+  color: #444;
+}
+
+/* Dialog Action Buttons */
+.win95-dialog-footer {
+  padding: 0 16px 16px 16px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.btn-dialog {
+  min-width: 110px;
+  height: 34px;
+  font-size: 0.85rem;
+}
+
+.btn-ok {
+  font-weight: 800;
+  border: 2px solid #000;
+  outline: 1px solid var(--win95-highlight-white);
+}
+
+/* Utility Helpers */
+.hidden { display: none !important; }
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .win95-window {
+    width: 95%;
+  }
+
+  .win95-keypad {
+    gap: 6px;
+  }
+
+  .win95-btn {
+    height: 44px;
+    font-size: 1.1rem;
+  }
+}
