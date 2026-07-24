@@ -152,11 +152,11 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateDisplay() {
     if (isAnswerUnlocked) {
       lockStatus.className = 'status-tag';
-      lockStatus.innerHTML = '<i class="fa-solid fa-circle-check"></i> UNLOCKED';
+      lockStatus.innerHTML = '<i class="fa-solid fa-circle-check"></i> LUNAS';
       paywallBanner.classList.add('hidden');
     } else {
       lockStatus.className = 'status-tag';
-      lockStatus.innerHTML = '<i class="fa-solid fa-shield"></i> READY';
+      lockStatus.innerHTML = '<i class="fa-solid fa-shield-halved"></i> READY';
     }
 
     displayMain.textContent = currentExpression ? formatExpressionForDisplay(currentExpression) : '0';
@@ -273,7 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
     openModal();
 
     paywallBanner.classList.remove('hidden');
-    lockStatus.innerHTML = '<i class="fa-solid fa-lock"></i> PAYMENT REQ';
+    lockStatus.innerHTML = '<i class="fa-solid fa-clock"></i> MENUNGGU BAYAR';
   }
 
   function openModal() {
