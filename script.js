@@ -229,9 +229,29 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /**
+   * Evaluasi matematika aman di client-side
+   */
+  function safeEvaluate(expression) {
+    const sanitized = expression.replace(/[^0-9+\-*/().\s]/g, '');
+    if (!sanitized || sanitized.trim() === '') {
+      throw new Error('Ekspresi matematika tidak valid');
+    }
+    try {
+      const func = new Function(`"use strict"; return (${sanitized});`);
+      const val = func();
+      if (typeof val !== 'number' || !isFinite(val)) {
+        throw new Error('Hasil bukan angka terdefinisi (misal: pembagian dengan nol)');
+      }
+      return Math.round(val * 1e10) / 1e10;
+    } catch (err) {
+      throw new Error('Gagal menghitung ekspresi matematika');
+    }
+  }
+
+  /**
    * TRIGGER PAYWALL MODAL PROMPT ON "=" PRESS
    */
-  async function triggerPaywall() {
+  function triggerPaywall() {
     if (!currentExpression || currentExpression.trim() === '') return;
 
     playRetroSound('equals');
@@ -241,35 +261,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     try {
-      btnEquals.disabled = true;
-
-      const response = await fetch('/api/create-payment', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ expression: currentExpression })
-      });
-
-      const data = await response.json();
-      btnEquals.disabled = false;
-
-      if (!data.success) {
-        alert(data.message || 'Ekspresi matematika tidak valid!');
-        return;
-      }
-
-      pendingTransactionId = data.transactionId;
-      modalExpression.textContent = formatExpressionForDisplay(data.expression);
-
-      openModal();
-
-      paywallBanner.classList.remove('hidden');
-      lockStatus.innerHTML = '<i class="fa-solid fa-lock"></i> PAYMENT REQ';
-
-    } catch (error) {
-      btnEquals.disabled = false;
-      console.error('Server error:', error);
-      alert('Gagal terhubung dengan server Express.js.');
+      safeEvaluate(currentExpression);
+    } catch (evalErr) {
+      alert(evalErr.message);
+      return;
     }
+
+    pendingTransactionId = 'TRX-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
+    modalExpression.textContent = formatExpressionForDisplay(currentExpression);
+
+    openModal();
+
+    paywallBanner.classList.remove('hidden');
+    lockStatus.innerHTML = '<i class="fa-solid fa-lock"></i> PAYMENT REQ';
   }
 
   function openModal() {
@@ -291,7 +295,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /**
    * PROCESS PAYMENT SIMULATION
    */
-  async function processPaymentSimulation() {
+  function processPaymentSimulation() {
     if (!pendingTransactionId) {
       alert('Transaksi tidak ditemukan!');
       closeModal();
@@ -306,20 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
     paymentSuccessBox.classList.add('hidden');
 
     try {
-      const response = await fetch('/api/process-payment', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ transactionId: pendingTransactionId })
-      });
-
-      const data = await response.json();
-
-      if (!data.success) {
-        alert(data.message || 'Gagal memproses pembayaran!');
-        modalFooter.classList.remove('hidden');
-        paymentStatusBox.classList.add('hidden');
-        return;
-      }
+      const result = safeEvaluate(currentExpression);
 
       setTimeout(() => {
         paymentSpinner.classList.add('hidden');
@@ -330,8 +321,8 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
           closeModal();
 
-          displayExpression.textContent = formatExpressionForDisplay(data.expression) + ' =';
-          currentExpression = String(data.result);
+          displayExpression.textContent = formatExpressionForDisplay(currentExpression) + ' =';
+          currentExpression = String(result);
           isAnswerUnlocked = true;
           pendingTransactionId = null;
 
@@ -342,8 +333,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 800);
 
     } catch (err) {
-      console.error('Payment error:', err);
-      alert('Terjadi kesalahan jaringan.');
+      console.error('Calculation error:', err);
+      alert('Terjadi kesalahan saat menghitung ekspresi.');
       modalFooter.classList.remove('hidden');
       paymentStatusBox.classList.add('hidden');
     }
