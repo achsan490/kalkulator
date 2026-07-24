@@ -6,6 +6,9 @@
   <meta name="description" content="PayCalc v1.0 Windows 95 Desktop Edition - Kalkulator Unik dengan Fitur Paywall">
   <title>PayCalc v1.0 - Windows 95 Edition</title>
   
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
   <!-- Google Fonts: VT323 (Pixel Font), MS Reference Monospace style -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -169,7 +172,7 @@
       <!-- Dialog Titlebar -->
       <div class="win95-titlebar dialog-titlebar">
         <div class="titlebar-text">
-          <i class="fa-solid fa-triangle-exclamation"></i> Security Alert - Payment Required
+          <i class="fa-solid fa-shield-halved"></i> Billing Gateway - Konfirmasi Pembayaran QRIS
         </div>
         <button type="button" class="titlebar-btn btn-close" id="modalCloseBtn">&times;</button>
       </div>
@@ -181,24 +184,24 @@
           <!-- Win95 Yellow Alert Icon -->
           <div class="win95-alert-icon">!</div>
           <div class="dialog-prompt-text">
-            <h3>Matematika Itu Mahal!</h3>
-            <p>Bayar <strong>Rp1.000</strong> untuk membuka hasil jawaban matematika ini.</p>
+            <h3>Tagihan Pembayaran Kalkulasi</h3>
+            <p>Silakan selesaikan pembayaran sebesar <strong>Rp 1.000</strong> untuk membuka hasil jawaban matematika ini.</p>
           </div>
         </div>
 
         <!-- Order Detail Sunken Box -->
         <div class="win95-receipt-box win95-sunken">
           <div class="receipt-line">
-            <span>EKSPRESI:</span>
+            <span>RINCIAN EKSPRESI:</span>
             <span class="receipt-val" id="modalExpression">15 + 25</span>
           </div>
           <div class="receipt-line">
-            <span>BIAYA JASA OTAK:</span>
+            <span>BIAYA KOMPUTASI SERVER:</span>
             <span>Rp 1.000</span>
           </div>
           <div class="receipt-hr"></div>
           <div class="receipt-line total-line">
-            <span>TOTAL DIBAYAR:</span>
+            <span>TOTAL TAGIHAN:</span>
             <span class="green-price">RP 1.000</span>
           </div>
         </div>
@@ -208,7 +211,7 @@
           <div class="qris-win95-card win95-sunken">
             <div class="qris-win95-header">
               <span class="qris-bold">QRIS</span>
-              <span class="qris-sub">STANDAR BAYAR DIGI 1995</span>
+              <span class="qris-sub">STANDAR PEMBAYARAN NASIONAL</span>
             </div>
             
             <div class="qr-code-win95">
@@ -272,14 +275,14 @@
               </svg>
             </div>
             
-            <div class="qris-merchant-win95">PAYCALC CORP (ID: 0x95)</div>
+            <div class="qris-merchant-win95">NMK: PT PAYCALC DIGITAL UTAMA (ID: ID1029384892)</div>
           </div>
         </div>
 
         <!-- Processing Status Box Overlay -->
         <div class="win95-status-overlay hidden" id="paymentStatusBox">
           <div class="win95-progress-box" id="paymentSpinner">
-            <p>Processing payment transaction...</p>
+            <p>Memverifikasi transaksi pembayaran QRIS...</p>
             <!-- Win95 Progress Bar -->
             <div class="win95-progress-bar win95-sunken">
               <div class="progress-fill"></div>
@@ -288,8 +291,8 @@
           
           <div class="win95-success-box hidden" id="paymentSuccessBox">
             <i class="fa-solid fa-circle-check win95-success-icon"></i>
-            <h3>PAYMENT SUCCESSFUL!</h3>
-            <p>Jawaban telah dibuka di layar kalkulator.</p>
+            <h3>PEMBAYARAN TERVERIFIKASI!</h3>
+            <p>Status: LUNAS. Hasil perhitungan telah berhasil ditampilkan.</p>
           </div>
         </div>
 
@@ -298,10 +301,10 @@
       <!-- Dialog Action Buttons -->
       <div class="win95-dialog-footer" id="modalFooter">
         <button type="button" class="win95-btn btn-dialog btn-ok" id="btnSimulatePay">
-          <u>O</u>K - Simulasi Bayar Rp1.000
+          <u>B</u>ayar via QRIS (Rp 1.000)
         </button>
         <button type="button" class="win95-btn btn-dialog" id="btnCancelPay">
-          Cancel
+          Batal
         </button>
       </div>
 
